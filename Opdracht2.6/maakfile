@@ -1,0 +1,20 @@
+rm := rm -f
+
+.PHONY: build melody.cpp clean
+
+build: main.out
+
+melody.cpp: main.out
+	./main.out
+
+clean: 
+	$(rm) main.out generator.o note_printer.o
+
+main.out : generator.o rtttl_write.o
+	g++ generator.o rtttl_write.o -o main.out
+
+generator.o : generator.cpp
+	g++ -c generator.cpp -o generator.o
+
+rtttl_write.o : rtttl_write.cpp rtttl_write.hpp
+	g++ -c rtttl_write.cpp -o rtttl_write.o
